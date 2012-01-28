@@ -98,7 +98,7 @@ namespace MonoGame.Tests.Components {
 	/// Defines behavior needed for frames to be scheduled for capture and
 	/// then manipulated and released.
 	/// </summary>
-	interface IFrameSource {
+	interface IFrameCaptureSource {
 		/// <summary>
 		/// Schedules a frame capture for the next available Draw cycle.
 		/// </summary>
@@ -111,7 +111,7 @@ namespace MonoGame.Tests.Components {
 		Texture2D GetCapturedFrame ();
 
 		/// <summary>
-		/// Notifies the <see cref="IFrameSource"/> implementation that
+		/// Notifies the <see cref="IFrameCaptureSource"/> implementation that
 		/// a called has finished using the texture returned by
 		/// <see cref="GetCapturedFrame"/>.
 		/// </summary>
@@ -147,7 +147,7 @@ namespace MonoGame.Tests.Components {
 			DidCaptureFrame
 		}
 
-		private IFrameSource _frameSource;
+		private IFrameCaptureSource _frameSource;
 		private Predicate<FrameInfo> _capturePredicate;
 		private string _fileNameFormat;
 		private string _referenceImageDirectory;
@@ -241,7 +241,7 @@ namespace MonoGame.Tests.Components {
 		public override void Initialize ()
 		{
 			base.Initialize ();
-			_frameSource = Game.Services.RequireService<IFrameSource> ();
+			_frameSource = Game.Services.RequireService<IFrameCaptureSource> ();
 		}
 
 		public override void Update (GameTime gameTime)

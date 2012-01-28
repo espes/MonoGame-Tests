@@ -140,15 +140,5 @@ namespace MonoGame.Tests {
 				Exit ();
 			}
 		}
-
-		protected override void Dispose (bool disposing)
-		{
-			if (disposing) {
-				try {
-					//GraphicsDevice.Dispose ();
-				} catch { }
-			}
-			base.Dispose (disposing);
-		}
 	}
 }

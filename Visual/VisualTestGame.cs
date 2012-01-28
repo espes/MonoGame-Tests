@@ -77,7 +77,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Tests.Components;
 
 namespace MonoGame.Tests.Visual {
-	class VisualTestGame : TestGameBase, IFrameSource {
+	class VisualTestGame : TestGameBase, IFrameCaptureSource {
 		public VisualTestGame ()
 		{
 			new GraphicsDeviceManager (this) {
@@ -85,7 +85,7 @@ namespace MonoGame.Tests.Visual {
 				PreferredBackBufferHeight = 480
 			};
 
-			Services.AddService<IFrameSource> (this);
+			Services.AddService<IFrameCaptureSource> (this);
 		}
 
 		protected override void Draw (GameTime gameTime)
