@@ -84,7 +84,6 @@
     <Compile Include="Utility.cs" />
     <Compile Include="Visual\BasicVisualTest.cs" />
     <Compile Include="Visual\IntermediateVisualTest.cs" />
-    <Compile Include="Visual\VisualTestBase.cs" />
     <Compile Include="Visual\VisualTestGame.cs" />
     <Compile Include="Components\ClearComponent.cs" />
     <Compile Include="Components\Draw2DComponent.cs" />
@@ -92,6 +91,10 @@
     <Compile Include="Components\FrameCompareComponent.cs" />
     <Compile Include="Components\ImplicitDrawOrderComponent.cs" />
     <Compile Include="Components\PixelDeltaFrameComparer.cs" />
+    <Compile Include="Visual\VisualTestFixtureBase.cs" />
+    <Compile Include="Components\UpdateGuard.cs" />
+    <Compile Include="Components\VisualTestDrawableGameComponent.cs" />
+    <Compile Include="Components\VisualTestGameComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

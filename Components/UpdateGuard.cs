@@ -71,39 +71,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using NUnit.Framework;
+namespace MonoGame.Tests.Components {
+	class UpdateGuard {
+		private int _lastDrawNumberOfUpdate = -1;
 
-using Microsoft.Xna.Framework;
-
-using MonoGame.Tests.Components;
-
-namespace MonoGame.Tests.Visual {
-	[TestFixture]
-	class IntermediateVisualTest : VisualTestFixtureBase {
-		private const string Draw2DFolder = "Draw2D";
-		[Test, RequiresSTA]
-		public void Draw2D ()
+		public bool ShouldUpdate (FrameInfo frameInfo)
 		{
-			Game.Components.Add (new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue });
-			Game.Components.Add (new Draw2DComponent (Game));
-
-			var frameComparer = new FrameCompareComponent (
-				Game, x => x.DrawNumber % 5 == 0,
-				"frame-{0:00}.png",
-				Paths.ReferenceImage (Draw2DFolder),
-				Paths.CapturedFrame (Draw2DFolder)) {
-				{ new PixelDeltaFrameComparer(), 1.0f }
-				};
-			Game.Components.Add(frameComparer);
-
-			Game.ExitCondition = x => x.DrawNumber > 50;
-			Game.Run ();
-
-			WriteFrameComparisonDiffs(
-				frameComparer.Results,
-				Paths.CapturedFrameDiff(Draw2DFolder));
-			AssertFrameComparisonResultsPassed (
-				frameComparer.Results, Constants.StandardRequiredSimilarity, 10);
+			if (_lastDrawNumberOfUpdate == frameInfo.DrawNumber)
+				return false;
+			_lastDrawNumberOfUpdate = frameInfo.DrawNumber;
+			return true;
 		}
 	}
 }

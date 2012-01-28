@@ -75,7 +75,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame.Tests.Components {
-	class Draw2DComponent : DrawableGameComponent {
+	class Draw2DComponent : VisualTestDrawableGameComponent {
 		private SpriteBatch _spriteBatch;
 		private Texture2D _texture;
 		//private SpriteFont _font;
@@ -111,16 +111,9 @@ namespace MonoGame.Tests.Components {
 			//_font = null;
 		}
 
-		private int _lastUpdateDrawNumber = -1;
-		public override void Update (GameTime gameTime)
+		protected override void UpdateOncePerDraw (GameTime gameTime)
 		{
-			var frameInfo = Game.Services.RequireService<IFrameInfoSource>().FrameInfo;
-			if (frameInfo.ElapsedGameTime == TimeSpan.Zero)
-				return;
-
-			if (_lastUpdateDrawNumber == frameInfo.DrawNumber)
-				return;
-			_lastUpdateDrawNumber = frameInfo.DrawNumber;
+			base.UpdateOncePerDraw (gameTime);
 
 			_size += 0.5f;
 			if (_size > 150)
@@ -133,8 +126,6 @@ namespace MonoGame.Tests.Components {
 			_clippingSize += 0.5f;
 			if (_clippingSize > Game.GraphicsDevice.Viewport.Width)
 				_clippingSize = 0.0f;
-
-			base.Update (gameTime);
 		}
 
 		public override void Draw (GameTime gameTime)

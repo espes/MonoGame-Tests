@@ -71,39 +71,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using NUnit.Framework;
-
 using Microsoft.Xna.Framework;
 
-using MonoGame.Tests.Components;
-
-namespace MonoGame.Tests.Visual {
-	[TestFixture]
-	class IntermediateVisualTest : VisualTestFixtureBase {
-		private const string Draw2DFolder = "Draw2D";
-		[Test, RequiresSTA]
-		public void Draw2D ()
+namespace MonoGame.Tests.Components {
+	class VisualTestGameComponent : GameComponent {
+		public VisualTestGameComponent (Game game)
+			: base (game)
 		{
-			Game.Components.Add (new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue });
-			Game.Components.Add (new Draw2DComponent (Game));
+		}
 
-			var frameComparer = new FrameCompareComponent (
-				Game, x => x.DrawNumber % 5 == 0,
-				"frame-{0:00}.png",
-				Paths.ReferenceImage (Draw2DFolder),
-				Paths.CapturedFrame (Draw2DFolder)) {
-				{ new PixelDeltaFrameComparer(), 1.0f }
-				};
-			Game.Components.Add(frameComparer);
+		private UpdateGuard _updateGuard = new UpdateGuard ();
+		public override void Update (GameTime gameTime)
+		{
+			base.Update (gameTime);
 
-			Game.ExitCondition = x => x.DrawNumber > 50;
-			Game.Run ();
+			if (gameTime.ElapsedGameTime == TimeSpan.Zero)
+				return;
 
-			WriteFrameComparisonDiffs(
-				frameComparer.Results,
-				Paths.CapturedFrameDiff(Draw2DFolder));
-			AssertFrameComparisonResultsPassed (
-				frameComparer.Results, Constants.StandardRequiredSimilarity, 10);
+			if (_updateGuard.ShouldUpdate(Game.Services.RequireService<IFrameInfoSource> ().FrameInfo))
+				UpdateOncePerDraw (gameTime);
+		}
+
+		protected virtual void UpdateOncePerDraw (GameTime gameTime)
+		{
 		}
 	}
 }

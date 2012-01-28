@@ -79,7 +79,7 @@ using MonoGame.Tests.Components;
 
 namespace MonoGame.Tests.Visual {
 	[TestFixture]
-	class BasicVisualTest : VisualTestBase {
+	class BasicVisualTest : VisualTestFixtureBase {
 
 		private const string ClearFolder = "Clear";
 		[Test, RequiresSTA]

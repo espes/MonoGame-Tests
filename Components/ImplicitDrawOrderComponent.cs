@@ -74,7 +74,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame.Tests.Components {
-	class ImplicitDrawOrderComponent : DrawableGameComponent {
+	class ImplicitDrawOrderComponent : VisualTestDrawableGameComponent {
 		private const int NumberOfBatches = 3;
 		private const int ItemsPerBatch = 3;
 		private int _batchNumber = 0;
@@ -110,10 +110,11 @@ namespace MonoGame.Tests.Components {
 			base.UnloadContent ();
 		}
 
-		public override void Update (GameTime gameTime)
+		protected override void UpdateOncePerDraw (GameTime gameTime)
 		{
-			var frameInfo = Game.Services.RequireService<IFrameInfoSource> ().FrameInfo;
-			if (_batchNumber < frameInfo.DrawNumber && _batchNumber < NumberOfBatches) {
+			base.UpdateOncePerDraw (gameTime);
+
+			if (_batchNumber < NumberOfBatches) {
 				for (int i = 0; i < ItemsPerBatch; ++i) {
 					var drawable = new TestDrawable (Game, this, _drawables.Count + 1);
 					_drawables.Add (drawable);
@@ -121,8 +122,6 @@ namespace MonoGame.Tests.Components {
 				}
 				_batchNumber++;
 			}
-
-			base.Update (gameTime);
 		}
 
 		public override void Draw (GameTime gameTime)

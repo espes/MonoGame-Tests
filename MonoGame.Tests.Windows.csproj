@@ -65,6 +65,9 @@
     <Compile Include="Components\FrameCompareComponent.cs" />
     <Compile Include="Components\ImplicitDrawOrderComponent.cs" />
     <Compile Include="Components\PixelDeltaFrameComparer.cs" />
+    <Compile Include="Components\UpdateGuard.cs" />
+    <Compile Include="Components\VisualTestDrawableGameComponent.cs" />
+    <Compile Include="Components\VisualTestGameComponent.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="FrameInfo.cs" />
     <Compile Include="GameTest+Methods.cs" />
@@ -76,7 +79,7 @@
     <Compile Include="Utility.cs" />
     <Compile Include="Visual\BasicVisualTest.cs" />
     <Compile Include="Visual\IntermediateVisualTest.cs" />
-    <Compile Include="Visual\VisualTestBase.cs" />
+    <Compile Include="Visual\VisualTestFixtureBase.cs" />
     <Compile Include="Visual\VisualTestGame.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -79,7 +79,7 @@ using NUnit.Framework;
 using MonoGame.Tests.Components;
 
 namespace MonoGame.Tests.Visual {
-	class VisualTestBase {
+	class VisualTestFixtureBase {
 		private VisualTestGame _game;
 		protected VisualTestGame Game { get { return _game; } }
 
@@ -95,6 +95,14 @@ namespace MonoGame.Tests.Visual {
 		{
 			_game.Dispose ();
 			_game = null;
+		}
+
+		protected static void WriteFrameDiffsAndAssertComparisonPassed (
+			IEnumerable<FrameComparisonResult> results, string diffDirectory,
+			float threshold, int expectedCount)
+		{
+			WriteFrameComparisonDiffs (results, diffDirectory);
+			AssertFrameComparisonResultsPassed (results, threshold, expectedCount);
 		}
 
 		protected static void AssertFrameComparisonResultsPassed (
