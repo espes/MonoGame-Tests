@@ -20,6 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Commandlineparameters>--no-launch-results --stdout=fancyout.txt</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -38,19 +39,22 @@
     <Reference Include="System.Drawing" />
     <Reference Include="MonoMac" />
     <Reference Include="Moq">
-      <HintPath>..\ThirdParty\Libs\Moq.dll</HintPath>
+      <HintPath>Libs\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="NDesk.Options">
+      <HintPath>Libs\NDesk.Options.dll</HintPath>
     </Reference>
     <Reference Include="nunit.core">
-      <HintPath>..\ThirdParty\Libs\nunit.core.dll</HintPath>
+      <HintPath>Libs\nunit.core.dll</HintPath>
     </Reference>
     <Reference Include="nunit.core.interfaces">
-      <HintPath>..\ThirdParty\Libs\nunit.core.interfaces.dll</HintPath>
+      <HintPath>Libs\nunit.core.interfaces.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\ThirdParty\Libs\nunit.framework.dll</HintPath>
+      <HintPath>Libs\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="nunit.util">
-      <HintPath>..\ThirdParty\Libs\nunit.util.dll</HintPath>
+      <HintPath>Libs\nunit.util.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

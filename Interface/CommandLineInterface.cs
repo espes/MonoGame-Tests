@@ -67,9 +67,12 @@ non-infringement
 #endregion License
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml.Xsl;
+
+using NDesk.Options;
 
 using NUnit.Core;
 using NUnit.Util;
@@ -78,8 +81,41 @@ namespace MonoGame.Tests
 {
 	class CommandLineInterface : EventListener, ITestFilter
 	{
-		public static void RunMain(string [] args)
+		public static void RunMain (string [] args)
 		{
+			bool launchResults = true;
+			bool performXslTransform = true;
+			bool showHelp = false;
+
+			var directory = Directory.GetCurrentDirectory ();
+
+			string xmlResultsFile = Path.Combine (directory, "test_results.xml");
+			string transformedResultsFile = Path.Combine (directory, "test_results.html");
+			string xslTransformPath = Path.Combine ("Resources", "tests.xsl");
+			string stdoutFile = Path.Combine (directory, "stdout.txt");
+			var optionSet = new OptionSet () {
+				{ "no-launch-results", x => launchResults = false },
+				{ "no-xsl-transform", x => performXslTransform = false },
+				{ "xml-results=", x => xmlResultsFile = x },
+				{ "xsl-transform=", x => xslTransformPath = x },
+				{ "transformed-results=", x => transformedResultsFile = x },
+				{ "stdout=", x => stdoutFile = x },
+//				{ "v|verbose",  x => ++verbose },
+				{ "h|?|help",   x => showHelp = true },
+			};
+
+			List<string> extra = optionSet.Parse (args);
+			if (extra.Count > 0)
+				Console.WriteLine (
+					"Ignoring {0} unrecognized argument(s): {1}",
+					extra.Count, string.Join (", ", extra));
+
+			if (showHelp) {
+				ShowHelp (optionSet);
+				System.Threading.Thread.Sleep (3000);
+				return;
+			}
+
 			CoreExtensions.Host.InitializeService ();
 
 			var assembly = Assembly.GetExecutingAssembly ();
@@ -92,23 +128,32 @@ namespace MonoGame.Tests
 				return;
 			}
 
-			var cli = new CommandLineInterface();
+			var cli = new CommandLineInterface ();
 
 			var result = simpleTestRunner.Run (cli, cli);
 
-			string outputPath = Path.Combine (Directory.GetCurrentDirectory (), "test_results.xml");
-			var resultWriter = new XmlResultWriter (outputPath);
+			var resultWriter = new XmlResultWriter (xmlResultsFile);
 			resultWriter.SaveTestResult (result);
 
-			var htmlOutputPath = Path.Combine (Directory.GetCurrentDirectory (), "test_results.html");
-			var transform = new XslTransform();
-			transform.Load(Path.Combine("Resources", "tests.xsl"));
-			transform.Transform (outputPath, htmlOutputPath);
+			if (performXslTransform) {
+				var transform = new XslTransform ();
+				transform.Load (xslTransformPath);
+				transform.Transform (xmlResultsFile, transformedResultsFile);
+			}
 
-			var stdoutLogPath = Path.Combine (Directory.GetCurrentDirectory (), "stdout.txt");
-			File.WriteAllText(stdoutLogPath, cli._stdoutStandin.ToString());
+			File.WriteAllText (stdoutFile, cli._stdoutStandin.ToString ());
 
-			System.Diagnostics.Process.Start (htmlOutputPath);
+			if (performXslTransform && launchResults)
+				System.Diagnostics.Process.Start (transformedResultsFile);
+		}
+
+		private static void ShowHelp (OptionSet optionSet)
+		{
+			string executableName = Path.GetFileName (
+				Assembly.GetExecutingAssembly ().Location);
+			Console.WriteLine ("Usage: {0} [OPTIONS]+", executableName);
+			Console.WriteLine ("Options:");
+			optionSet.WriteOptionDescriptions (Console.Out);
 		}
 
 		private TextWriter _stdoutStandin;
@@ -128,12 +173,14 @@ namespace MonoGame.Tests
 
 		public void RunFinished (Exception exception)
 		{
-			// Console.WriteLine("RunFinished error");
+			// Error
+			stdout.WriteLine ();
 		}
 
 		public void RunFinished (TestResult result)
 		{
-			// Console.WriteLine("RunFinished success");
+			// Success
+			stdout.WriteLine ();
 		}
 
 		public void SuiteFinished (TestResult result)
