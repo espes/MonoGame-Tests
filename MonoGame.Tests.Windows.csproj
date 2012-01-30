@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F172852C-3ACF-49F8-9A1B-3D4B1A90C1D2}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MonoGame.Tests</RootNamespace>
     <AssemblyName>MonoGame.Tests.Windows</AssemblyName>
@@ -44,11 +44,28 @@
     <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\Lib\Moq\Moq.dll</HintPath>
+      <HintPath>Libs\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
+    <Reference Include="NDesk.Options">
+      <HintPath>Libs\NDesk.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>Libs\nunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core.interfaces, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>Libs\nunit.core.interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>Libs\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.util, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>Libs\nunit.util.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -73,6 +90,7 @@
     <Compile Include="GameTest+Methods.cs" />
     <Compile Include="GameTest+Properties.cs" />
     <Compile Include="GameTest.cs" />
+    <Compile Include="Interface\CommandLineInterface.cs" />
     <Compile Include="PixelArgb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGameBase.cs" />
@@ -81,6 +99,7 @@
     <Compile Include="Visual\IntermediateVisualTest.cs" />
     <Compile Include="Visual\VisualTestFixtureBase.cs" />
     <Compile Include="Visual\VisualTestGame.cs" />
+    <Compile Include="Windows\Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoGame.Framework\MonoGame.Framework.Windows.csproj">
@@ -135,6 +154,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\MonoGameIcon.png" />
+    <Content Include="Resources\tests.xsl" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\ReferenceImages\Clear\frame-01.png">
