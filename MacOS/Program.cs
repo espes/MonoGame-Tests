@@ -67,28 +67,40 @@ non-infringement
 #endregion License
 
 using System;
-using System.IO;
-using System.Reflection;
 
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-namespace MonoGame.Tests
-{
-	static class Program
-	{
+namespace MonoGame.Tests {
+	static class Program {
 		[STAThread]
 		static void Main (string [] args)
 		{
 			using (var pool = new NSAutoreleasePool ()) {
 				NSApplication.Init ();
 
-				var application = NSApplication.SharedApplication;
-				application.ActivationPolicy = NSApplicationActivationPolicy.Regular;
-				application.ActivateIgnoringOtherApps (true);
+				// The Mac test runner is the best-behaved of
+				// all the runners because we are able to take
+				// advantage of the default activation policy
+				// for command line utilities.  This means that
+				// all the tests can run and execute without
+				// stealing focus or bringing the test window to
+				// the foreground.
+				//
+				// Best of all, to get this functionality, we
+				// simply don't call anything at all.  (Acting
+				// like a normal application is a bit trickier.)
+				// SetInteractive ();
 
-				CommandLineInterface.RunMain(args);
+				CommandLineInterface.RunMain (args);
 			}
+		}
+
+		static void SetInteractive ()
+		{
+			var application = NSApplication.SharedApplication;
+			application.ActivationPolicy = NSApplicationActivationPolicy.Regular;
+			application.ActivateIgnoringOtherApps (true);
 		}
 	}
 }
