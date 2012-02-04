@@ -82,6 +82,7 @@
     <Compile Include="Components\FrameCompareComponent.cs" />
     <Compile Include="Components\ImplicitDrawOrderComponent.cs" />
     <Compile Include="Components\PixelDeltaFrameComparer.cs" />
+    <Compile Include="Components\SpriteFontComponent.cs" />
     <Compile Include="Components\UpdateGuard.cs" />
     <Compile Include="Components\VisualTestDrawableGameComponent.cs" />
     <Compile Include="Components\VisualTestGameComponent.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="TestGameBase.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Visual\BasicVisualTest.cs" />
+    <Compile Include="Visual\FontVisualTest.cs" />
     <Compile Include="Visual\IntermediateVisualTest.cs" />
     <Compile Include="Visual\VisualTestFixtureBase.cs" />
     <Compile Include="Visual\VisualTestGame.cs" />
@@ -141,6 +143,29 @@
     <Content Include="Assets\ReferenceImages\Draw2D\frame-46.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_flip_both\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_flip_horizontal\frame-01.png" />
+    <Content Include="Assets\ReferenceImages\DrawString_flip_vertical\frame-01.png" />
+    <Content Include="Assets\ReferenceImages\DrawString_hullabaloo2\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_hullabaloo\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_multiline\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_origins\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_origins_scaled\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_plain\frame-01.png" />
+    <Content Include="Assets\ReferenceImages\DrawString_rotated\frame-01.png" />
+    <Content Include="Assets\ReferenceImages\DrawString_scaled\frame-01.png" />
     <Content Include="Assets\ReferenceImages\ImplicitDrawOrder\frame-01.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

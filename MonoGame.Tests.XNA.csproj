@@ -80,6 +80,7 @@
     <Compile Include="Components\Draw2DComponent.cs" />
     <Compile Include="Components\DrawFrameNumberComponent.cs" />
     <Compile Include="Components\ImplicitDrawOrderComponent.cs" />
+    <Compile Include="Components\SpriteFontComponent.cs" />
     <Compile Include="Components\VisualTestGameComponent.cs" />
     <Compile Include="Components\VisualTestDrawableGameComponent.cs" />
     <Compile Include="Constants.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\PixelDeltaFrameComparer.cs" />
     <Compile Include="Visual\BasicVisualTest.cs" />
+    <Compile Include="Visual\FontVisualTest.cs" />
     <Compile Include="Visual\IntermediateVisualTest.cs" />
     <Compile Include="Components\UpdateGuard.cs" />
     <Compile Include="Visual\VisualTestFixtureBase.cs" />
@@ -154,6 +156,39 @@
     <Content Include="Assets\ReferenceImages\Draw2D\frame-46.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_flip_both\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_flip_horizontal\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_flip_vertical\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_hullabaloo2\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_hullabaloo\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_origins\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_origins_scaled\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_plain\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_rotated\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_scaled\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ReferenceImages\DrawString_multiline\frame-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\ReferenceImages\ImplicitDrawOrder\frame-01.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -193,6 +228,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
