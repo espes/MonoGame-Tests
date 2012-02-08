@@ -253,10 +253,35 @@ But the answer was still '42'.
 
 				spriteBatch.DrawString (
 					font, text, new Vector2 (100, 150), Color.Yellow,
-					MathHelper.ToRadians(20), new Vector2(40f, 60f), new Vector2(0.9f, 0.9f),
+					MathHelper.ToRadians (20), new Vector2 (40f, 60f), new Vector2 (0.9f, 0.9f),
 					SpriteEffects.None, 0.0f);
 				spriteBatch.End ();
 			});
+		}
+
+		[Test, RequiresSTA]
+		public void DrawString_DataFontTest ()
+		{
+			DrawStringTest ("DataFont", "DataFont", (frameInfo, font, spriteBatch) => {
+				spriteBatch.Begin ();
+				spriteBatch.DrawString (font, "Now is the time for all good DataFonts", new Vector2 (50, 50), Color.Violet);
+				spriteBatch.End ();
+			});
+		}
+
+		[Test, RequiresSTA]
+		public void DrawString_SpecialChars ()
+		{
+			Game.Components.Add (new SpriteFontComponent(Game, Paths.Font ("Default")) {
+				DrawAction = (frameInfo, font, spriteBatch) => {
+					spriteBatch.Begin ();
+					Assert.Throws<ArgumentException> (() => spriteBatch.DrawString (font, "The rain in España stays mainly in the plain - now in français", new Vector2 (50, 50), Color.Violet));
+					spriteBatch.End ();
+				}
+			});
+
+			Game.ExitCondition = x => x.DrawNumber > 1;
+			Game.Run ();
 		}
 
 		const string DrawStringFolderBase = "DrawString";
@@ -270,21 +295,21 @@ But the answer was still '42'.
 			});
 
 			var folder = DrawStringFolderBase + "_" + name;
-			var frameComparer = new FrameCompareComponent(
+			var frameComparer = new FrameCompareComponent (
 				Game, x => true,
 				"frame-{0:00}.png",
-				Paths.ReferenceImage(folder),
-				Paths.CapturedFrame(folder)) {
-					{ new PixelDeltaFrameComparer(), 1 },
+				Paths.ReferenceImage (folder),
+				Paths.CapturedFrame (folder)) {
+					{ new PixelDeltaFrameComparer (), 1 },
 				};
 			Game.Components.Add (frameComparer);
 
 			Game.ExitCondition = x => x.DrawNumber > FramesToDraw;
 			Game.Run ();
 
-			WriteFrameComparisonDiffs(
+			WriteFrameComparisonDiffs (
 				frameComparer.Results,
-				Paths.CapturedFrameDiff(folder));
+				Paths.CapturedFrameDiff (folder));
 			AssertFrameComparisonResultsPassed (
 				frameComparer.Results, Constants.StandardRequiredSimilarity, FramesToDraw);
 		}
