@@ -101,9 +101,6 @@ the test fixture is already set up):
   ```ContentManager``` can find your assets on all platforms.
 - Note that all platforms are forced to run in Synchronous mode and
   that this doesn't always work perfectly on all platforms yet.
-- Note that MacOS synchronous mode, in particular, is a bit goofy right
-  now.  (It may send the letter 'A' to any program that you focus while
-  tests are executing.  A fix is on the way!)
 
 ## NUnit Configuration
 
