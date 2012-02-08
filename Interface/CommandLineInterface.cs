@@ -76,6 +76,7 @@ using NDesk.Options;
 
 using NUnit.Core;
 using NUnit.Util;
+using System.Text.RegularExpressions;
 
 namespace MonoGame.Tests
 {
@@ -93,7 +94,10 @@ namespace MonoGame.Tests
 			string transformedResultsFile = Path.Combine (directory, "test_results.html");
 			string xslTransformPath = Path.Combine ("Resources", "tests.xsl");
 			string stdoutFile = Path.Combine (directory, "stdout.txt");
+			var filters = new List<RegexFilter> ();
 			var optionSet = new OptionSet () {
+				{ "i|include=", x => filters.Add(RegexFilter.Parse(x, FilterAction.Include)) },
+				{ "x|exclude=", x => filters.Add(RegexFilter.Parse(x, FilterAction.Exclude)) },
 				{ "no-launch-results", x => launchResults = false },
 				{ "no-xsl-transform", x => performXslTransform = false },
 				{ "xml-results=", x => xmlResultsFile = x },
@@ -128,7 +132,7 @@ namespace MonoGame.Tests
 				return;
 			}
 
-			var cli = new CommandLineInterface ();
+			var cli = new CommandLineInterface (filters);
 
 			var result = simpleTestRunner.Run (cli, cli);
 
@@ -157,30 +161,36 @@ namespace MonoGame.Tests
 		}
 
 		private TextWriter _stdoutStandin;
-		private StreamWriter stdout;
-		private CommandLineInterface ()
+		private StreamWriter _stdout;
+		private List<RegexFilter> _filters;
+		private CommandLineInterface (IEnumerable<RegexFilter> filters)
 		{
 			_stdoutStandin = new StringWriter ();
 			Console.SetOut (_stdoutStandin);
-			stdout = new StreamWriter (Console.OpenStandardOutput ());
-			stdout.AutoFlush = true;
+			_stdout = new StreamWriter (Console.OpenStandardOutput ());
+			_stdout.AutoFlush = true;
+
+			if (filters == null)
+				_filters = new List<RegexFilter> ();
+			else
+				_filters = new List<RegexFilter> (filters);
 		}
 
 		public void RunStarted (string name, int testCount)
 		{
-			stdout.WriteLine("Run Started: {0}", name);
+			_stdout.WriteLine("Run Started: {0}", name);
 		}
 
 		public void RunFinished (Exception exception)
 		{
 			// Error
-			stdout.WriteLine ();
+			_stdout.WriteLine ();
 		}
 
 		public void RunFinished (TestResult result)
 		{
 			// Success
-			stdout.WriteLine ();
+			_stdout.WriteLine ();
 		}
 
 		public void SuiteFinished (TestResult result)
@@ -230,7 +240,7 @@ namespace MonoGame.Tests
 				break;
 			}
 
-			stdout.Write (output);
+			_stdout.Write (output);
 
 			_stdoutStandin.WriteLine("Finished: " + result.FullName);
 			_stdoutStandin.WriteLine();
@@ -258,19 +268,61 @@ namespace MonoGame.Tests
 			return false;
 		}
 
-		private int count = 0;
 		public bool Pass (ITest test)
 		{
-			//if (count == 101)
-			//	Console.Write (test.TestName.Name);
-			//if (count > 100)
-				//return false;
+			if (test.IsSuite)
+				return true;
 
-			count++;
+			foreach (var filter in _filters)
+				if (!filter.Pass (test.TestName.FullName))
+					return false;
+
 			return true;
 		}
 
 		#endregion ITestFilter Implementation
 
+		class RegexFilter {
+			private readonly Regex _regex;
+			private readonly FilterAction _filterAction;
+
+			public RegexFilter (Regex regex, FilterAction filterAction)
+			{
+				if (regex == null)
+					throw new ArgumentNullException ("regex");
+				_regex = regex;
+				_filterAction = filterAction;
+			}
+
+			public bool Pass (string name)
+			{
+				var match = _regex.Match (name);
+
+				if (_filterAction == FilterAction.Exclude)
+					return !match.Success;
+				return match.Success;
+			}
+
+			public static RegexFilter Parse (string s, FilterAction filterAction)
+			{
+				if (string.IsNullOrEmpty (s))
+					throw new ArgumentException ("Filter string cannot be null or empty", "s");
+
+				string pattern;
+				if (s.Length > 1 && s.StartsWith ("/") && s.EndsWith ("/")) {
+					pattern =s.Substring(1, s.Length - 2); 
+				} else {
+					pattern = string.Join ("", ".*", s, ".*");
+				}
+
+				var regex = new Regex (pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+				return new RegexFilter (regex, filterAction);
+			}
+		}
+
+		enum FilterAction {
+			Include,
+			Exclude
+		}
 	}
 }

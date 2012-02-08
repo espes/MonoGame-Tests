@@ -85,7 +85,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_plain ()
 		{
-			DrawStringTest("plain", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 				spriteBatch.DrawString (font, "plain old text", new Vector2 (50, 50), Color.Violet);
 				spriteBatch.End ();
@@ -95,7 +95,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_rotated ()
 		{
-			DrawStringTest ("rotated", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 				spriteBatch.DrawString (
 					font, "rotated", new Vector2 (50, 50), Color.Orange, MathHelper.PiOver4,
@@ -107,7 +107,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_scaled ()
 		{
-			DrawStringTest ("scaled", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 				spriteBatch.DrawString (
 					font, "scaled", new Vector2 (50, 50), Color.Orange, 0,
@@ -119,7 +119,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_flip_horizontal ()
 		{
-			DrawStringTest ("flip_horizontal", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 				spriteBatch.DrawString (
 					font, "flipped horizontally", new Vector2 (50, 50), Color.Orange, 0,
@@ -131,7 +131,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_flip_vertical ()
 		{
-			DrawStringTest ("flip_vertical", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 				spriteBatch.DrawString (
 					font, "flipped vertically", new Vector2 (50, 50), Color.Orange, 0,
@@ -143,7 +143,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_flip_both ()
 		{
-			DrawStringTest ("flip_both", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 				spriteBatch.DrawString (
 					font, "flipped both", new Vector2 (50, 50), Color.Orange, 0,
@@ -154,9 +154,9 @@ namespace MonoGame.Tests.Visual {
 		}
 
 		[Test, RequiresSTA]
-		public void DrawString_origins ()
+		public void DrawString_origins_rotated ()
 		{
-			DrawStringTest ("origins", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 
 				var position = new Vector2 (100, 100);
@@ -185,7 +185,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_origins_scaled ()
 		{
-			DrawStringTest ("origins_scaled", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 
 				var position = new Vector2 (100, 100);
@@ -214,7 +214,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_hullabaloo ()
 		{
-			DrawStringTest ("hullabaloo", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 				spriteBatch.DrawString (
 					font, "hullabaloo", new Vector2 (100, 150), Color.HotPink,
@@ -227,7 +227,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_hullabaloo2 ()
 		{
-			DrawStringTest ("hullabaloo2", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 				spriteBatch.DrawString (
 					font, "hullabaloo2", new Vector2 (100, 150), Color.Yellow,
@@ -240,7 +240,7 @@ namespace MonoGame.Tests.Visual {
 		[Test, RequiresSTA]
 		public void DrawString_multiline ()
 		{
-			DrawStringTest ("multiline", "Default", (frameInfo, font, spriteBatch) => {
+			DrawStringTest ("Default", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 
 				var text =
@@ -260,9 +260,10 @@ But the answer was still '42'.
 		}
 
 		[Test, RequiresSTA]
-		public void DrawString_DataFontTest ()
+		public void DrawString_font_with_Spacing ()
 		{
-			DrawStringTest ("DataFont", "DataFont", (frameInfo, font, spriteBatch) => {
+			// DataFont has a non-zero Spacing property.
+			DrawStringTest ("DataFont", (frameInfo, font, spriteBatch) => {
 				spriteBatch.Begin ();
 				spriteBatch.DrawString (font, "Now is the time for all good DataFonts", new Vector2 (50, 50), Color.Violet);
 				spriteBatch.End ();
@@ -270,7 +271,7 @@ But the answer was still '42'.
 		}
 
 		[Test, RequiresSTA]
-		public void DrawString_SpecialChars ()
+		public void DrawString_throws_when_drawing_unavailable_characters ()
 		{
 			Game.Components.Add (new SpriteFontComponent(Game, Paths.Font ("Default")) {
 				DrawAction = (frameInfo, font, spriteBatch) => {
@@ -284,22 +285,26 @@ But the answer was still '42'.
 			Game.Run ();
 		}
 
-		const string DrawStringFolderBase = "DrawString";
+		const string DrawStringFolder = "DrawString";
 		private void DrawStringTest (
-			string name, string fontName, Action<FrameInfo, SpriteFont, SpriteBatch> drawAction)
+			string fontName, Action<FrameInfo, SpriteFont, SpriteBatch> drawAction)
 		{
+			var stackTrace = new System.Diagnostics.StackTrace ();
+			var name = stackTrace.GetFrame (1).GetMethod ().Name;
+			if (name.StartsWith ("DrawString_"))
+				name = name.Substring ("DrawString_".Length);
+
 			const int FramesToDraw = 1;
 			Game.Components.Add (new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue });
 			Game.Components.Add (new SpriteFontComponent (Game, Paths.Font (fontName)) {
 				DrawAction = drawAction
 			});
 
-			var folder = DrawStringFolderBase + "_" + name;
 			var frameComparer = new FrameCompareComponent (
 				Game, x => true,
-				"frame-{0:00}.png",
-				Paths.ReferenceImage (folder),
-				Paths.CapturedFrame (folder)) {
+				name + "-{0:00}.png",
+				Paths.ReferenceImage (DrawStringFolder),
+				Paths.CapturedFrame (DrawStringFolder)) {
 					{ new PixelDeltaFrameComparer (), 1 },
 				};
 			Game.Components.Add (frameComparer);
@@ -309,7 +314,7 @@ But the answer was still '42'.
 
 			WriteFrameComparisonDiffs (
 				frameComparer.Results,
-				Paths.CapturedFrameDiff (folder));
+				Paths.CapturedFrameDiff (DrawStringFolder));
 			AssertFrameComparisonResultsPassed (
 				frameComparer.Results, Constants.StandardRequiredSimilarity, FramesToDraw);
 		}
