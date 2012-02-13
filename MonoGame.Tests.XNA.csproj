@@ -107,6 +107,8 @@
     <Compile Include="Visual\VisualTestFixtureBase.cs" />
     <Compile Include="Visual\VisualTestGame.cs" />
     <Compile Include="Windows\Program.cs" />
+    <Compile Include="Components\SpriteShaderComponent.cs" />
+    <Compile Include="Visual\ShaderVisualTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\tests.xsl">
