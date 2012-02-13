@@ -84,6 +84,8 @@
     <Compile Include="Components\VisualTestGameComponent.cs" />
     <Compile Include="Visual\FontVisualTest.cs" />
     <Compile Include="Components\SpriteFontComponent.cs" />
+    <Compile Include="Components\SpriteShaderComponent.cs" />
+    <Compile Include="Visual\ShaderVisualTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThirdParty\Lidgren.Network\Lidgren.Network.MacOS.csproj">
