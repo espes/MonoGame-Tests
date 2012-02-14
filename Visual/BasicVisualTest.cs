@@ -99,7 +99,7 @@ namespace MonoGame.Tests.Visual {
 			              new ClearComponent (Game) {
 			                  ColorFunction = x => colors[x.DrawNumber - 1]
 			              },
-                          ClearFolder,
+			              ClearFolder,
 			              colors.Length);
 		}
 
@@ -109,8 +109,8 @@ namespace MonoGame.Tests.Visual {
 		{
 			TestComponents("frame", new IGameComponent[] {
 			                            new ClearComponent (Game) { ColorFunction = x => Color.Red },
-				                        new DrawFrameNumberComponent (Game) },
-                           LabelledFrameFolder,
+			                            new DrawFrameNumberComponent (Game) },
+			               LabelledFrameFolder,
 			               5);
 		}
 
@@ -120,8 +120,8 @@ namespace MonoGame.Tests.Visual {
 		{
 			TestComponents("frame", new IGameComponent[] {
 			                            new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue },
-				                        new ImplicitDrawOrderComponent (Game) },
-                           ImplicitDrawOrderFolder,
+			                            new ImplicitDrawOrderComponent (Game) },
+			               ImplicitDrawOrderFolder,
 			               4);
 		}
 	}

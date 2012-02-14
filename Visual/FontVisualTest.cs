@@ -296,8 +296,8 @@ But the answer was still '42'.
 
 			TestComponents (name,
 			                new IGameComponent[] {
-				                new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue },
-				                new SpriteFontComponent (Game, Paths.Font (fontName)) {
+			                    new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue },
+			                    new SpriteFontComponent (Game, Paths.Font (fontName)) {
 			                        DrawAction = drawAction
 			                    }
 			                },
