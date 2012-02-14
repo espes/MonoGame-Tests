@@ -74,6 +74,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using IGameComponent = Microsoft.Xna.Framework.IGameComponent;
+
 using NUnit.Framework;
 
 using MonoGame.Tests.Components;
@@ -236,6 +238,61 @@ namespace MonoGame.Tests.Visual {
 				pRowB += bData.Stride;
 				pRowDiff += diffData.Stride;
 			}
+		}
+
+		//routines to do simple testing of drawing components
+		protected void TestComponents(string testImageName,
+		                              IGameComponent[] components,
+		                              string frameFolder,
+		                              int framesToDraw = 1)
+		{
+			foreach (var component in components)
+			{
+				Game.Components.Add (component);
+			}
+
+			var frameComparer = new FrameCompareComponent (
+				Game, x => true,
+				testImageName + "-{0:00}.png",
+				Paths.ReferenceImage (frameFolder),
+				Paths.CapturedFrame (frameFolder)) {
+					{ new PixelDeltaFrameComparer (), 1 },
+				};
+			Game.Components.Add (frameComparer);
+
+			Game.ExitCondition = x => x.DrawNumber > framesToDraw;
+			Game.Run ();
+
+			WriteFrameComparisonDiffs (
+				frameComparer.Results,
+				Paths.CapturedFrameDiff (frameFolder));
+			AssertFrameComparisonResultsPassed (
+				frameComparer.Results, Constants.StandardRequiredSimilarity, framesToDraw);
+		}
+
+		protected void TestComponents(IGameComponent[] components,
+		                              string frameFolder,
+		                              int framesToDraw = 1)
+		{
+			var stackTrace = new System.Diagnostics.StackTrace ();
+			var name = stackTrace.GetFrame (1).GetMethod ().Name;
+
+			TestComponents (name, components, frameFolder, framesToDraw);
+		}
+
+		protected void TestComponent(string testImageName,
+		                             IGameComponent component,
+		                             string frameFolder,
+		                             int framesToDraw = 1)
+		{
+			TestComponents(testImageName, new IGameComponent[] {component}, frameFolder, framesToDraw);
+		}
+
+		protected void TestComponent(IGameComponent component,
+		                             string frameFolder,
+		                             int framesToDraw = 1)
+		{
+			TestComponents(new IGameComponent[] {component}, frameFolder, framesToDraw);
 		}
 	}
 }

@@ -134,28 +134,9 @@ namespace MonoGame.Tests.Visual {
 		private void ShaderTest (
 			string effectName)
 		{
-			var name = effectName;
-
-			const int FramesToDraw = 1;
-			Game.Components.Add (new SpriteShaderComponent (Game, Paths.Effect (effectName)));
-
-			var frameComparer = new FrameCompareComponent (
-				Game, x => true,
-				name + "-{0:00}.png",
-				Paths.ReferenceImage (SpriteShaderFolder),
-				Paths.CapturedFrame (SpriteShaderFolder)) {
-					{ new PixelDeltaFrameComparer (), 1 },
-				};
-			Game.Components.Add (frameComparer);
-
-			Game.ExitCondition = x => x.DrawNumber > FramesToDraw;
-			Game.Run ();
-
-			WriteFrameComparisonDiffs (
-				frameComparer.Results,
-				Paths.CapturedFrameDiff (SpriteShaderFolder));
-			AssertFrameComparisonResultsPassed (
-				frameComparer.Results, Constants.StandardRequiredSimilarity, FramesToDraw);
+			TestComponent(effectName,
+			              new SpriteShaderComponent (Game, Paths.Effect (effectName)),
+			              SpriteShaderFolder);
 		}
 	}
 }

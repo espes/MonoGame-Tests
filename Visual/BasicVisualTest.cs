@@ -95,84 +95,34 @@ namespace MonoGame.Tests.Visual {
 				Color.Violet
 			};
 
-			Game.Components.Add (new ClearComponent (Game) {
-				ColorFunction = x => colors[x.DrawNumber - 1]
-			});
-
-			var frameComparer = new FrameCompareComponent(
-				Game, x => true,
-				"frame-{0:00}.png",
-				Paths.ReferenceImage(ClearFolder),
-				Paths.CapturedFrame(ClearFolder)) {
-					{ new PixelDeltaFrameComparer(), 1 },
-				};
-			Game.Components.Add (frameComparer);
-
-			Game.ExitCondition = x => x.DrawNumber > colors.Length;
-			Game.Run ();
-
-			WriteFrameComparisonDiffs(
-				frameComparer.Results,
-				Paths.CapturedFrameDiff(ClearFolder));
-			AssertFrameComparisonResultsPassed (
-				frameComparer.Results, Constants.StandardRequiredSimilarity, colors.Length);
+			TestComponent("frame",
+			              new ClearComponent (Game) {
+			                  ColorFunction = x => colors[x.DrawNumber - 1]
+			              },
+                          ClearFolder,
+			              colors.Length);
 		}
 
 		private const string LabelledFrameFolder = "LabelledFrame";
 		[Test, RequiresSTA]
 		public void Labelled_frame ()
 		{
-			const int FramesToDraw = 5;
-
-			Game.Components.Add (new ClearComponent (Game) { ColorFunction = x => Color.Red });
-			Game.Components.Add (new DrawFrameNumberComponent (Game));
-
-			var frameComparer = new FrameCompareComponent(
-				Game, x => true,
-				"frame-{0:00}.png",
-				Paths.ReferenceImage(LabelledFrameFolder),
-				Paths.CapturedFrame(LabelledFrameFolder)) {
-					{ new PixelDeltaFrameComparer(), 1 },
-				};
-			Game.Components.Add (frameComparer);
-
-			Game.ExitCondition = x => x.DrawNumber > FramesToDraw;
-			Game.Run ();
-
-			WriteFrameComparisonDiffs(
-				frameComparer.Results,
-				Paths.CapturedFrameDiff(LabelledFrameFolder));
-			AssertFrameComparisonResultsPassed (
-				frameComparer.Results, Constants.StandardRequiredSimilarity, FramesToDraw);
+			TestComponents("frame", new IGameComponent[] {
+			                            new ClearComponent (Game) { ColorFunction = x => Color.Red },
+				                        new DrawFrameNumberComponent (Game) },
+                           LabelledFrameFolder,
+			               5);
 		}
 
 		private const string ImplicitDrawOrderFolder = "ImplicitDrawOrder";
 		[Test, RequiresSTA]
 		public void DrawOrder_falls_back_to_order_of_addition_to_Game ()
 		{
-			const int FramesToDraw = 4;
-
-			Game.Components.Add (new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue });
-			Game.Components.Add (new ImplicitDrawOrderComponent (Game));
-
-			var frameComparer = new FrameCompareComponent(
-				Game, x => true,
-				"frame-{0:00}.png",
-				Paths.ReferenceImage(ImplicitDrawOrderFolder),
-				Paths.CapturedFrame(ImplicitDrawOrderFolder)) {
-					{ new PixelDeltaFrameComparer(), 1 },
-				};
-			Game.Components.Add (frameComparer);
-
-			Game.ExitCondition = x => x.DrawNumber > FramesToDraw;
-			Game.Run ();
-
-			WriteFrameComparisonDiffs(
-				frameComparer.Results,
-				Paths.CapturedFrameDiff(ImplicitDrawOrderFolder));
-
-			AssertFrameComparisonResultsPassed (
-				frameComparer.Results, Constants.StandardRequiredSimilarity, FramesToDraw);
+			TestComponents("frame", new IGameComponent[] {
+			                            new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue },
+				                        new ImplicitDrawOrderComponent (Game) },
+                           ImplicitDrawOrderFolder,
+			               4);
 		}
 	}
 }

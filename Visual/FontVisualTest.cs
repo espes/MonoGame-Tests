@@ -294,29 +294,14 @@ But the answer was still '42'.
 			if (name.StartsWith ("DrawString_"))
 				name = name.Substring ("DrawString_".Length);
 
-			const int FramesToDraw = 1;
-			Game.Components.Add (new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue });
-			Game.Components.Add (new SpriteFontComponent (Game, Paths.Font (fontName)) {
-				DrawAction = drawAction
-			});
-
-			var frameComparer = new FrameCompareComponent (
-				Game, x => true,
-				name + "-{0:00}.png",
-				Paths.ReferenceImage (DrawStringFolder),
-				Paths.CapturedFrame (DrawStringFolder)) {
-					{ new PixelDeltaFrameComparer (), 1 },
-				};
-			Game.Components.Add (frameComparer);
-
-			Game.ExitCondition = x => x.DrawNumber > FramesToDraw;
-			Game.Run ();
-
-			WriteFrameComparisonDiffs (
-				frameComparer.Results,
-				Paths.CapturedFrameDiff (DrawStringFolder));
-			AssertFrameComparisonResultsPassed (
-				frameComparer.Results, Constants.StandardRequiredSimilarity, FramesToDraw);
+			TestComponents (name,
+			                new IGameComponent[] {
+				                new ClearComponent (Game) { ColorFunction = x => Color.CornflowerBlue },
+				                new SpriteFontComponent (Game, Paths.Font (fontName)) {
+			                        DrawAction = drawAction
+			                    }
+			                },
+			                DrawStringFolder);
 		}
 	}
 }
