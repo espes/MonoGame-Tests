@@ -124,5 +124,19 @@ namespace MonoGame.Tests.Visual {
 			               ImplicitDrawOrderFolder,
 			               4);
 		}
+
+		[Test, RequiresSTA]
+		public void Colored3DCube_no_lighting ()
+		{
+			TestComponent(new Colored3DCubeComponent(Game, false),
+			               "Colored3DCube");
+		}
+
+		[Test, RequiresSTA]
+		public void Colored3DCube_lighting ()
+		{
+			TestComponent(new Colored3DCubeComponent(Game, true),
+			               "Colored3DCube");
+		}
 	}
 }

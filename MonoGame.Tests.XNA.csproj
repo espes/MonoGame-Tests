@@ -109,6 +109,7 @@
     <Compile Include="Windows\Program.cs" />
     <Compile Include="Components\SpriteShaderComponent.cs" />
     <Compile Include="Visual\ShaderVisualTest.cs" />
+    <Compile Include="Components\Colored3DCubeComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\tests.xsl">

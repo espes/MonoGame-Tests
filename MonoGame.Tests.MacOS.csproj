@@ -86,6 +86,7 @@
     <Compile Include="Components\SpriteFontComponent.cs" />
     <Compile Include="Components\SpriteShaderComponent.cs" />
     <Compile Include="Visual\ShaderVisualTest.cs" />
+    <Compile Include="Components\Colored3DCubeComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThirdParty\Lidgren.Network\Lidgren.Network.MacOS.csproj">

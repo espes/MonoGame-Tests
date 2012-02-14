@@ -292,7 +292,10 @@ namespace MonoGame.Tests.Visual {
 		                             string frameFolder,
 		                             int framesToDraw = 1)
 		{
-			TestComponents(new IGameComponent[] {component}, frameFolder, framesToDraw);
+			var stackTrace = new System.Diagnostics.StackTrace ();
+			var name = stackTrace.GetFrame (1).GetMethod ().Name;
+
+			TestComponents(name, new IGameComponent[] {component}, frameFolder, framesToDraw);
 		}
 	}
 }
