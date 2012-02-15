@@ -145,5 +145,13 @@ namespace MonoGame.Tests.Visual {
 			TestComponent(new TexturedQuadComponent(Game, true),
 			               "TexturedQuad");
 		}
+
+		[Test, RequiresSTA]
+		public void SpaceshipModel ()
+		{
+			TestComponent(new SpaceshipModelDrawComponent(Game),
+			              "SpaceshipModel",
+			              20);
+		}
 	}
 }

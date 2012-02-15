@@ -111,6 +111,7 @@
     <Compile Include="Visual\ShaderVisualTest.cs" />
     <Compile Include="Components\Colored3DCubeComponent.cs" />
     <Compile Include="Components\TexturedQuadComponent.cs" />
+    <Compile Include="Components\SpaceshipModelDrawComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\tests.xsl">
