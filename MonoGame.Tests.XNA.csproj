@@ -110,6 +110,7 @@
     <Compile Include="Components\SpriteShaderComponent.cs" />
     <Compile Include="Visual\ShaderVisualTest.cs" />
     <Compile Include="Components\Colored3DCubeComponent.cs" />
+    <Compile Include="Components\TexturedQuadComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\tests.xsl">

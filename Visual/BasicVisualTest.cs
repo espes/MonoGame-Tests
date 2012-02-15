@@ -126,17 +126,24 @@ namespace MonoGame.Tests.Visual {
 		}
 
 		[Test, RequiresSTA]
-		public void Colored3DCube_no_lighting ()
+		public void Colored3DCube ()
 		{
-			TestComponent(new Colored3DCubeComponent(Game, false),
+			TestComponent(new Colored3DCubeComponent(Game),
 			               "Colored3DCube");
 		}
 
 		[Test, RequiresSTA]
-		public void Colored3DCube_lighting ()
+		public void TexturedQuad_no_lighting ()
 		{
-			TestComponent(new Colored3DCubeComponent(Game, true),
-			               "Colored3DCube");
+			TestComponent(new TexturedQuadComponent(Game, false),
+			               "TexturedQuad");
+		}
+
+		[Test, RequiresSTA]
+		public void TexturedQuad_lighting ()
+		{
+			TestComponent(new TexturedQuadComponent(Game, true),
+			               "TexturedQuad");
 		}
 	}
 }

@@ -80,15 +80,13 @@ namespace MonoGame.Tests.Components {
 
 		Matrix worldMatrix, viewMatrix, projectionMatrix;
 
-		bool enableLighting;
-
-		public Colored3DCubeComponent (Game game, bool enableLighting) : base(game)
+		public Colored3DCubeComponent (Game game) : base(game)
 		{
-			this.enableLighting = enableLighting;
 		}
 
 		protected override void LoadContent ()
 		{
+			base.LoadContent();
 
 			// setup our graphics scene matrices
 			worldMatrix = Matrix.Identity;
@@ -104,8 +102,6 @@ namespace MonoGame.Tests.Components {
 			basicEffect.View = viewMatrix;
 			basicEffect.Projection = projectionMatrix;
 			basicEffect.VertexColorEnabled = true;
-			if (enableLighting)
-				basicEffect.EnableDefaultLighting();
 
 			CreateCubeVertexBuffer ();
 			CreateCubeIndexBuffer ();
