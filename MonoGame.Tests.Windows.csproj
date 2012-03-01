@@ -96,9 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGameBase.cs" />
     <Compile Include="Utility.cs" />
-    <Compile Include="Visual\BasicVisualTest.cs" />
     <Compile Include="Visual\FontVisualTest.cs" />
-    <Compile Include="Visual\IntermediateVisualTest.cs" />
     <Compile Include="Visual\VisualTestFixtureBase.cs" />
     <Compile Include="Visual\VisualTestGame.cs" />
     <Compile Include="Windows\Program.cs" />
@@ -107,6 +105,7 @@
     <Compile Include="Components\Colored3DCubeComponent.cs" />
     <Compile Include="Components\TexturedQuadComponent.cs" />
     <Compile Include="Components\SpaceshipModelDrawComponent.cs" />
+    <Compile Include="Visual\MiscVisualTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoGame.Framework\MonoGame.Framework.Windows.csproj">

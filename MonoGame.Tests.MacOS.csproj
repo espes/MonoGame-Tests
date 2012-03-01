@@ -69,8 +69,6 @@
     <Compile Include="Components\FrameCompareComponent.cs" />
     <Compile Include="Components\ImplicitDrawOrderComponent.cs" />
     <Compile Include="Components\PixelDeltaFrameComparer.cs" />
-    <Compile Include="Visual\BasicVisualTest.cs" />
-    <Compile Include="Visual\IntermediateVisualTest.cs" />
     <Compile Include="Visual\VisualTestGame.cs" />
     <Compile Include="FrameInfo.cs" />
     <Compile Include="GameTest+Methods.cs" />
@@ -89,6 +87,7 @@
     <Compile Include="Components\Colored3DCubeComponent.cs" />
     <Compile Include="Components\TexturedQuadComponent.cs" />
     <Compile Include="Components\SpaceshipModelDrawComponent.cs" />
+    <Compile Include="Visual\MiscVisualTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThirdParty\Lidgren.Network\Lidgren.Network.MacOS.csproj">
